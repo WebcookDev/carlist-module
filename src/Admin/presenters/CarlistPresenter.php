@@ -170,7 +170,15 @@ class CarlistPresenter extends BasePresenter
 
         $form->addText('name', 'Name')->setRequired();
         $form->addSelect('category_id', 'Category')->setItems($categoriesForSelect);
+        $form->addText('engineVolume', 'Engine volume');
+        $form->addText('enginePower', 'Engine power');
+        $form->addText('fuelType', 'Fuel type');
+        $form->addText('drivenKm', 'Driven km');
+        $form->addText('color', 'color');
+        $form->addTextArea('equipment', 'Equipment');
+        $form->addText('dateOfManufacture', 'Date of manufacture');
         $form->addText('price', 'Price');
+        $form->addText('priceInfo', 'Price info');
                 
         $form->addCheckbox('hide', 'Hide');
 
@@ -205,7 +213,17 @@ class CarlistPresenter extends BasePresenter
         
         $this->car->setName($values->name);
         $this->car->setCategory($category);
+
+        $this->car->setEngineVolume($values->engineVolume);
+        $this->car->setEnginePower($values->enginePower);
+        $this->car->setFuelType($values->fuelType);
+        $this->car->setDrivenKm($values->drivenKm);
+        $this->car->setColor($values->color);
+        $this->car->setEquipment($values->equipment);
+        $this->car->setDateOfManufacture($values->dateOfManufacture);
+
         $this->car->setPrice($values->price);
+        $this->car->setPriceInfo($values->priceInfo);
         $this->car->setHide($values->hide);
             
         if(array_key_exists('files', $_POST)){

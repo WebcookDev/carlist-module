@@ -39,7 +39,7 @@ class Car extends \WebCMS\Entity\Entity
 	private $price;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $priceInfo;
 
@@ -74,7 +74,7 @@ class Car extends \WebCMS\Entity\Entity
     private $engineVolume;
 
     /**
-     * @ORM\Column(type="date", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $dateOfManufacture;
 

@@ -15,9 +15,43 @@
 			{label category_id class => 'control-label' /}
 			{input category_id class => 'form-control'}
 		</div>
+
+		<div class="control-group">
+			{label engineVolume class => 'control-label' /}
+			{input engineVolume class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label enginePower class => 'control-label' /}
+			{input enginePower class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label fuelType class => 'control-label' /}
+			{input fuelType class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label drivenKm class => 'control-label' /}
+			{input drivenKm class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label color class => 'control-label' /}
+			{input color class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label equipment class => 'control-label' /}
+			{input equipment class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label dateOfManufacture class => 'control-label' /}
+			{input dateOfManufacture class => 'form-control'}
+		</div>
+
 		<div class="control-group">
 			{label price class => 'control-label' /}
 			{input price class => 'form-control'}
+		</div>
+		<div class="control-group">
+			{label priceInfo class => 'control-label' /}
+			{input priceInfo class => 'form-control'}
 		</div>
 		<div class="control-group">
 			{label hide class => 'control-label' /}
@@ -31,7 +65,7 @@
 		<br /><br />
 		
 		<div class="well row" id="pictures">
-			{if !empty($tour)}
+			{if !empty($car)}
 				{foreach $car->getPhotos() as $photo}
 					<div class="col-md-3 jq_fileBox">
 						<div class="img-thumbnail">
