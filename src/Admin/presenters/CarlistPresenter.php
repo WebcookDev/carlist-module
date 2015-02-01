@@ -61,6 +61,8 @@ class CarlistPresenter extends BasePresenter
 
         $grid->addColumnText('name', 'Name')->setSortable();
 
+        $grid->addColumnText('enginePower', 'Engine poweb')->setSortable();
+
         $grid->addColumnText('category_id', 'Category')->setCustomRender(function($item) {
             return $item->getCategory()->getName();
         })->setSortable();
