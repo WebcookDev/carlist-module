@@ -61,7 +61,17 @@ class CarlistPresenter extends BasePresenter
 
         $grid->addColumnText('name', 'Name')->setSortable();
 
-        $grid->addColumnText('enginePower', 'Engine poweb')->setSortable();
+        $grid->addColumnText('engineVolume', 'Engine volume')->setSortable();
+
+        $grid->addColumnText('enginePower', 'Engine power')->setSortable();
+
+        $grid->addColumnText('dateOfManufacture', 'Date of manufacture')->setSortable();
+
+        $grid->addColumnText('fuelType', 'Fuel type')->setSortable();
+
+        $grid->addColumnText('drivenKm', 'Driven km')->setSortable();
+
+        $grid->addColumnText('color', 'Color')->setSortable();
 
         $grid->addColumnText('category_id', 'Category')->setCustomRender(function($item) {
             return $item->getCategory()->getName();
@@ -171,7 +181,7 @@ class CarlistPresenter extends BasePresenter
         }
 
         $form->addText('name', 'Name')->setRequired();
-        $form->addSelect('category_id', 'Category')->setItems($categoriesForSelect);
+        $form->addSelect('category', 'Category')->setItems($categoriesForSelect);
         $form->addText('engineVolume', 'Engine volume');
         $form->addText('enginePower', 'Engine power');
         $form->addText('fuelType', 'Fuel type');
@@ -211,7 +221,7 @@ class CarlistPresenter extends BasePresenter
                     ->execute();
         }
 
-        $category = $this->em->getRepository('\WebCMS\CarlistModule\Entity\Category')->find($values->category_id);
+        $category = $this->em->getRepository('\WebCMS\CarlistModule\Entity\Category')->find($values->category);
         
         $this->car->setName($values->name);
         $this->car->setCategory($category);
