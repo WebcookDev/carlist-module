@@ -89,7 +89,7 @@ class Car extends \WebCMS\Entity\Entity
     private $fuelType;
 
     /**
-     * @ORM\OneToMany(targetEntity="Photo", mappedBy="tour") 
+     * @ORM\OneToMany(targetEntity="Photo", mappedBy="car") 
      * @var Array
      */
     private $photos;
