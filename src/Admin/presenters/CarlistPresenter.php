@@ -73,13 +73,22 @@ class CarlistPresenter extends BasePresenter
 
         $grid->addColumnText('color', 'Color')->setSortable();
 
-        $grid->addColumnText('category_id', 'Category')->setCustomRender(function($item) {
+        $grid->addColumnText('category', 'Category')->setCustomRender(function($item) {
             return $item->getCategory()->getName();
         })->setSortable();
 
         $grid->addColumnText('price', 'Price')->setSortable();
 
+        $grid->addColumnText('homepage', 'Added to homepage')->setCustomRender(function($item) {
+            if ($item->getHomepage()) {
+                return 'yes';
+            } else {
+                return 'no';
+            }
+        })->setSortable();
+
         $grid->addActionHref("update", 'Edit', 'update', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-primary', 'ajax')));
+        $grid->addActionHref("addToHomepage", 'Add to homepage', 'addToHomepage', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-primary', 'ajax')));
         $grid->addActionHref("delete", 'Delete', 'delete', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-danger') , 'data-confirm' => 'Are you sure you want to delete this item?'));
 
         return $grid;
@@ -93,6 +102,19 @@ class CarlistPresenter extends BasePresenter
 
         $this->template->idPage = $idPage;
         $this->template->car = $this->car;
+    }
+
+    public function actionAddToHomepage($id, $idPage)
+    {
+        $this->car = $this->em->getRepository('\WebCMS\CarlistModule\Entity\Car')->find($id);
+        $this->car->setHomepage($this->car->getHomepage() ? false : true);
+
+        $this->em->flush();
+
+        $this->flashMessage('Car has been changed', 'success');
+        $this->forward('default', array(
+            'idPage' => $this->actualPage->getId()
+        ));
     }
 
     public function actionDelete($id){
