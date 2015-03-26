@@ -25,7 +25,7 @@ class CarlistPresenter extends BasePresenter
 
     private $car;
 
-    private $Cars;
+    private $cars;
 
     private $category;
 
@@ -46,14 +46,29 @@ class CarlistPresenter extends BasePresenter
 
     public function actionDefault($id)
     {
-        
+        $this->cars = $this->repository->findAll();
 
+        $parameters = $this->getParameter();
+
+        if (count($parameters['parameters']) > 0) {
+            $this->category = $this->repository->findOneBy(array(
+                'slug' => $parameters['parameters'][0]
+            ));
+            $this->cars = $this->repository->findBy(array(
+                'category' => $this->category
+            ));
+
+            // if (!is_object($this->product)) {
+            //     throw new \Nette\Application\BadRequestException();
+            // }
+        }
     }
 
 
     public function renderDefault($id)
     {   
         $this->template->id = $id;
+        $this->template->cars = $this->cars;
     }
 
 }
