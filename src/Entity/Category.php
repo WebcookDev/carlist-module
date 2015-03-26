@@ -16,10 +16,10 @@ use Gedmo\Mapping\Annotation as gedmo;
  */
 class Category extends \WebCMS\Entity\Entity
 {
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
-	private $name;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     /**
      * @gedmo\Slug(fields={"name"})
@@ -32,6 +32,11 @@ class Category extends \WebCMS\Entity\Entity
      * @var Array
      */
     private $cars;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $brandThumb;
 
 
     /**
@@ -91,4 +96,32 @@ class Category extends \WebCMS\Entity\Entity
 
         return $this;
     }
+
+    /**
+     * Gets the brandThumb of brandThumb.
+     *
+     * @return mixed
+     */
+    public function getBrandThumb()
+    {
+        return $this->brandThumb;
+    }
+
+    /**
+     * Sets the value of brandThumb.
+     *
+     * @param mixed $brandThumb the brandThumb
+     *
+     * @return self
+     */
+    public function setBrandThumb($brandThumb)
+    {
+        $this->brandThumb = $brandThumb;
+
+        return $this;
+    }
+
+
+
+
 }

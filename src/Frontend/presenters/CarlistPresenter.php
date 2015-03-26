@@ -47,11 +47,12 @@ class CarlistPresenter extends BasePresenter
     public function actionDefault($id)
     {
         $this->cars = $this->repository->findAll();
+        $this->categories = $this->categoryRepository->findAll();
 
         $parameters = $this->getParameter();
 
         if (count($parameters['parameters']) > 0) {
-            $this->category = $this->repository->findOneBy(array(
+            $this->category = $this->categoryRepository->findOneBy(array(
                 'slug' => $parameters['parameters'][0]
             ));
             $this->cars = $this->repository->findBy(array(
@@ -69,6 +70,7 @@ class CarlistPresenter extends BasePresenter
     {   
         $this->template->id = $id;
         $this->template->cars = $this->cars;
+        $this->template->categories = $this->categories;
     }
 
 }
