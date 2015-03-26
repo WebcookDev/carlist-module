@@ -74,7 +74,7 @@ class Car extends \WebCMS\Entity\Entity
     private $engineVolume;
 
     /**
-     * @orm\Column(type="date", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $dateOfManufacture;
 
