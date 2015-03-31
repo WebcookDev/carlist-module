@@ -171,4 +171,31 @@ class CarlistPresenter extends BasePresenter
         
     }
 
+    public function homepageBox($context, $fromPage)
+    {
+        $template = $context->createTemplate();
+        $allCars = $context->em->getRepository('WebCMS\CarlistModule\Entity\Car')->findBy(array(
+            'hide' => false
+        ));
+        $template->cars = $context->em->getRepository('WebCMS\CarlistModule\Entity\Car')->findBy(array(
+            'hide' => false,
+            'homepage' => true
+        ));
+        $template->newCars = $context->em->getRepository('WebCMS\NewsModule\Doctrine\Actuality')->findAll();
+        $template->carPage = $context->em->getRepository('WebCMS\Entity\Page')->findOneBy(array(
+            'moduleName' => 'Carlist',
+            'presenter' => 'Carlist',
+            'language' => $fromPage->getLanguage()
+        ));
+        $template->link = $context->link(':Frontend:Carlist:Carlist:default', array(
+            'id' => $fromPage->getId(),
+            'path' => $fromPage->getPath(),
+            'abbr' => $context->abbr
+        ));
+        $template->abbr = $context->abbr;
+        $template->countOfCars = count($allCars);
+        $template->setFile(APP_DIR . '/templates/carlist-module/Carlist/homepageBox.latte');
+        return $template;  
+    }
+
 }

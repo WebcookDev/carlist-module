@@ -46,7 +46,7 @@ class Carlist extends \WebCMS\Module
 
     public function __construct()
     {
-        
+        $this->addBox('Homepage box', 'Carlist', 'homepageBox');
     }
 
     public function search(\Doctrine\ORM\EntityManager $em, $phrase, \WebCMS\Entity\Language $language)
