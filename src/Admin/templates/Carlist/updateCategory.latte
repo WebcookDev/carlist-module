@@ -5,7 +5,40 @@
 		{include ../tabs.latte active => 'categories'}
 	</div>
 
-	{control categoryForm}
+	{form categoryForm}
+
+		<div class="control-group">
+			{label name class => 'control-label' /}
+			{input name class => 'form-control'}
+		</div>
+
+		<br />
+
+		<div class="control-group">
+			<a n:href=":Admin:Filesystem:default dialog => true, multiple => false" data-container="#pictures" class="btn btn-primary ajax filesDialog" data-remote="false" data-target="#myModal" data-toggle="modal">{_'Load files'}</a>
+		</div>
+
+		<br />
+		
+		<div class="well row" id="pictures">
+			{if !empty($category)}
+				{if $category->getBrandThumb()}
+					<div class="col-md-3 jq_fileBox">
+						<div class="img-thumbnail">
+							<img src="{$basePath}{$category->getBrandThumb()|thumbnail:'system'}" />
+							<input type="hidden" name="files[]" value="{$category->getBrandThumb()}" />
+							<span class="btn btn-default jq_fileDelete">&times</span>
+						</div>
+					</div>			
+				{/if}
+			{/if}
+		</div>
+
+		<div class="form-actions">
+			{input submit class => 'btn btn-success'}
+		</div>
+
+	{/form}
 
 
 {/block}

@@ -148,8 +148,12 @@ class CarlistPresenter extends BasePresenter
         $this->reloadContent();
 
         $this->category = $id ? $this->em->getRepository('\WebCMS\CarlistModule\Entity\Category')->find($id) : "";
+    }
 
+    public function renderUpdateCategory($id, $idPage)
+    {
         $this->template->idPage = $idPage;
+        $this->template->category = $this->category;
     }
 
     protected function createComponentCategoryForm()
@@ -180,6 +184,14 @@ class CarlistPresenter extends BasePresenter
         foreach ($values as $key => $value) {
             $setter = 'set' . ucfirst($key);
             $this->category->$setter($value);
+        }
+
+        if (array_key_exists('files', $_POST)) {
+            foreach($_POST['files'] as $path){
+                $this->category->setBrandThumb($path);
+            }
+        } else {
+            $this->category->setBrandThumb("");
         }
 
         $this->em->flush();
