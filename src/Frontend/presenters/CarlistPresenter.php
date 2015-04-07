@@ -82,6 +82,7 @@ class CarlistPresenter extends BasePresenter
         $this->template->id = $id;
         $this->template->cars = $this->cars;
         $this->template->categories = $this->categories;
+        $this->template->category = $this->category;
 
         $this->template->carPage = $this->em->getRepository('WebCMS\Entity\Page')->findOneBy(array(
             'moduleName' => 'Carlist',
