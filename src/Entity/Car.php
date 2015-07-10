@@ -24,6 +24,7 @@ class Car extends \WebCMS\Entity\Entity
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="cars") 
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $category;
 
@@ -102,6 +103,11 @@ class Car extends \WebCMS\Entity\Entity
     /**
      * @ORM\Column(type="boolean")
      */
+    private $sold;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $top;
 
     /**
@@ -113,6 +119,7 @@ class Car extends \WebCMS\Entity\Entity
     public function __construct()
     {
         $this->hide = false;
+        $this->sold = false;
         $this->top = false;
         $this->homepage = false;
     }
@@ -416,6 +423,17 @@ class Car extends \WebCMS\Entity\Entity
     public function setFuelType($fuelType)
     {
         $this->fuelType = $fuelType;
+        return $this;
+    }
+
+    public function getSold()
+    {
+        return $this->sold;
+    }
+    
+    public function setSold($sold)
+    {
+        $this->sold = $sold;
         return $this;
     }
 

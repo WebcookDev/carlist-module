@@ -87,6 +87,22 @@ class CarlistPresenter extends BasePresenter
             }
         })->setSortable();
 
+        $grid->addColumnText('hide', 'Hidden')->setCustomRender(function($item) {
+            if ($item->getHide()) {
+                return 'yes';
+            } else {
+                return 'no';
+            }
+        })->setSortable();
+
+        $grid->addColumnText('sold', 'Sold')->setCustomRender(function($item) {
+            if ($item->getSold()) {
+                return 'yes';
+            } else {
+                return 'no';
+            }
+        })->setSortable();
+
         $grid->addActionHref("update", 'Edit', 'update', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-primary', 'ajax')));
         $grid->addActionHref("addToHomepage", 'Add to homepage', 'addToHomepage', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-primary', 'ajax')));
         $grid->addActionHref("delete", 'Delete', 'delete', array('idPage' => $this->actualPage->getId()))->getElementPrototype()->addAttributes(array('class' => array('btn', 'btn-danger') , 'data-confirm' => 'Are you sure you want to delete this item?'));
@@ -227,6 +243,7 @@ class CarlistPresenter extends BasePresenter
         $form->addText('priceInfo', 'Price info');
                 
         $form->addCheckbox('hide', 'Hide');
+        $form->addCheckbox('sold', 'sold');
 
         $form->addSubmit('submit', 'Save')->setAttribute('class', 'btn btn-success');
         $form->onSuccess[] = callback($this, 'carFormSubmitted');
@@ -271,6 +288,7 @@ class CarlistPresenter extends BasePresenter
         $this->car->setPrice($values->price);
         $this->car->setPriceInfo($values->priceInfo);
         $this->car->setHide($values->hide);
+        $this->car->setSold($values->sold);
             
         if(array_key_exists('files', $_POST)){
             $counter = 0;

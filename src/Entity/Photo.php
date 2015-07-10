@@ -27,6 +27,7 @@ class Photo extends \WebCMS\Entity\Entity
 
     /**
      * @ORM\ManyToOne(targetEntity="Car", inversedBy="photos") 
+     * @ORM\JoinColumn(name="car_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $car;
 
