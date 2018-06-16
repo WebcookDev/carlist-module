@@ -55,9 +55,14 @@ class CarlistPresenter extends BasePresenter
             $this->category = $this->categoryRepository->findOneBy(array(
                 'slug' => $parameters['parameters'][0]
             ));
-            $this->cars = $this->repository->findBy(array(
-                'category' => $this->category
-            ));
+            // shitcode
+            if ($this->category->getSlug() === "jine"){
+                $this->cars = $this->repository->findAll();
+            } else {
+                $this->cars = $this->repository->findBy(array(
+                    'category' => $this->category
+                ));
+            }
 
             if (isset($parameters['parameters'][1])) {
                 $this->car = $this->repository->findOneBy(array(
