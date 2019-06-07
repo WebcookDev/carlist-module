@@ -140,33 +140,49 @@ class CarlistPresenter extends BasePresenter
     public function formSubmitted($form)
     {
 
-        $values = $form->getValues();
+        if (isset($_POST['g-recaptcha-response'])) {
 
-        $mail = new \Nette\Mail\Message;
-        $infoMail = $this->settings->get('Info email', 'basic', 'text')->getValue();
-        $mail->addTo($infoMail);
-        
-        $domain = str_replace('www.', '', $this->getHttpRequest()->url->host);
-        
-        if($domain !== 'localhost') $mail->setFrom('no-reply@' . $domain);
-        else $mail->setFrom('no-reply@test.cz'); // TODO move to settings
+            $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+            $recaptcha_secret = '6LcTXqIUAAAAAIPPkphyoLD1sJaq3-CZCYBnQ5kE';
+            $recaptcha_response = $_POST['g-recaptcha-response'];
 
-        $mailBody = '<h1>'.$values->carName.'</h1>';
-        $mailBody .= '<p><strong>Jméno: </strong>'.$values->name.'</p>';
-        $mailBody .= '<p><strong>Email: </strong>'.$values->email.'</p>';
-        $mailBody .= '<p><strong>Telefon: </strong>'.$values->phone.'</p>';
-        $mailBody .= '<p><strong>Text: </strong>'.$values->text.'</p>';
+            $recaptcha = file_get_contents($recaptcha_url . '?secret=' . $recaptcha_secret . '&response=' . $recaptcha_response);
+            $recaptcha = json_decode($recaptcha);
 
-        $mail->setSubject('Poptávka automobilu '.$values->carName);
-        $mail->setHtmlBody($mailBody);
+            if ($recaptcha->score >= 0.5) {
+                $values = $form->getValues();
 
-        try {
-            $mail->send();  
-            $this->flashMessage('Demand form has been sent', 'success');
-        } catch (\Exception $e) {
-            $this->flashMessage('Cannot send email.', 'danger');                    
-        }
+                $mail = new \Nette\Mail\Message;
+                $infoMail = $this->settings->get('Info email', 'basic', 'text')->getValue();
+                $mail->addTo($infoMail);
+                
+                $domain = str_replace('www.', '', $this->getHttpRequest()->url->host);
+                
+                if($domain !== 'localhost') $mail->setFrom('no-reply@' . $domain);
+                else $mail->setFrom('no-reply@test.cz'); // TODO move to settings
+
+                $mailBody = '<h1>'.$values->carName.'</h1>';
+                $mailBody .= '<p><strong>Jméno: </strong>'.$values->name.'</p>';
+                $mailBody .= '<p><strong>Email: </strong>'.$values->email.'</p>';
+                $mailBody .= '<p><strong>Telefon: </strong>'.$values->phone.'</p>';
+                $mailBody .= '<p><strong>Text: </strong>'.$values->text.'</p>';
+
+                $mail->setSubject('Poptávka automobilu '.$values->carName);
+                $mail->setHtmlBody($mailBody);
+
+                try {
+                    $mail->send();  
+                    $this->flashMessage('Demand form has been sent', 'success');
+                } catch (\Exception $e) {
+                    $this->flashMessage('Cannot send email.', 'danger');                    
+                }
+            } else {
+                $this->flashMessage('Bot', 'danger');
+            }
        
+        } else {
+            $this->flashMessage('Wrong protection code.', 'danger');
+        }
 
         $httpRequest = $this->getContext()->getService('httpRequest');
 
